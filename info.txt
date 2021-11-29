@@ -1,0 +1,10 @@
+django-admin startproject django_project => to start project
+
+
+python manage.py runserver =>to run the server 
+
+http://127.0.0.1:8000/  => local host 
+
+path('admin/', admin.site.urls)  => maps the site url 
+
+python manage.py startapp blog  => to create a sub project in the django app
