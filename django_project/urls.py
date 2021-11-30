@@ -18,7 +18,7 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('blog/', include('blog.urls')), #/blog sends the url to the blog app we created 
+    path('', include('blog.urls')), #/blog sends the url to the blog app we created 
     # http://127.0.0.1:8000/blog//about  => when we go to this page it goes into blog 
     # directory and then searches for url named about if it is present 
     # path('') =>for it to be the home page 
