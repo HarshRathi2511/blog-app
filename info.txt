@@ -10,3 +10,67 @@ path('admin/', admin.site.urls)  => maps the site url
 python manage.py startapp blog  => to create a sub project in the django app
 
 Add the path to the settings.py of the main project from the app.py in blog 
+
+python manage.py makemigrations  => to create the database 
+
+python manage.py createsuperuser 
+
+   D:\CP\Python\django_project>python manage.py createsuperuser
+Username (leave blank to use 'harshrathi'): harshrathi2511
+Email address: rathiharsh2002@gmail.com
+Password: 
+Password (again):
+Superuser created successfully.
+
+
+  orm =>object relation manager 
+  all the code remains the same in it when changing the databases
+
+We've definitely changed and added models, so it's time for a makemigrations and migrate!
+
+ python manage.py makemigrations
+Migrations for 'blog':
+  blog\migrations\0001_initial.py
+    - Create model Post
+
+ python manage.py sqlmigrate blog 0001
+BEGIN;
+--
+-- Create model Post
+--
+CREATE TABLE "blog_post" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "title" varchar(100) NOT NULL, "content" text NOT NULL, "datePosted" datetime NOT NULL, "author_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED);
+CREATE INDEX "blog_post_author_id_dd7a8485" ON "blog_post" ("author_id");
+COMMIT;
+
+=>it wrote the sql code for the class 
+
+
+
+python manage.py shell 
+allows us to work with the models interactively line by line 
+
+python manage.py shell
+Python 3.10.0 (tags/v3.10.0:b494f59, Oct  4 2021, 19:00:18) [MSC v.1929 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from blog.models import Post 
+>>> from django.contrib.auth.models import User
+>>> User.objects.all()
+<QuerySet [<User: harshrathi2511>, <User: TestUser>]>
+>>> User.objects.first
+<bound method BaseManager._get_queryset_methods.<locals>.create_method.<locals>.manager_method of <django.contrib.auth.models.UserManager object at 0x000002A2061F71F0>>
+>>> User.objects.first()
+<User: harshrathi2511>
+>>> User.objects.filter(username = 'harshrathi2511')
+<QuerySet [<User: harshrathi2511>]>
+>>> user= User.objects.filter(username = 'harshrathi2511').first()
+>>> user
+<User: harshrathi2511>
+>>> user.id
+1
+>>> user.pk
+1
+>>>
+
+
+
