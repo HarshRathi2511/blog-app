@@ -1,7 +1,6 @@
 from django.shortcuts import render  #to return a render template 
 from .models import Post 
 
-
 # handle the traffic from the homepage of the blog
 def home(request):   #function
     context = {

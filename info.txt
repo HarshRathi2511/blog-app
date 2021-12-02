@@ -59,7 +59,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 <QuerySet [<User: harshrathi2511>, <User: TestUser>]>
 >>> User.objects.first
 <bound method BaseManager._get_queryset_methods.<locals>.create_method.<locals>.manager_method of <django.contrib.auth.models.UserManager object at 0x000002A2061F71F0>>
->>> User.objects.first()
+>>> User.objects.first()   #to save it to the db 
 <User: harshrathi2511>
 >>> User.objects.filter(username = 'harshrathi2511')
 <QuerySet [<User: harshrathi2511>]>
@@ -90,5 +90,18 @@ The sqlmigrate <app-name> <migration-name> is used to get raw SQL query.
 ////
 query
 ////
+.<modelname>_set
 user.post_set.all()  to get the post the user has set 
-user.post_set.create()
+user.post_set.create(title='Blog 3',content='THIRD POST')
+
+//user should have its own app
+python manage.py startapp <appname>
+s2)add it to installed app setting.py
+s3)
+
+The primary attributes of the default user are:
+username
+password
+email
+first_name
+last_name
