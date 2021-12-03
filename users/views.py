@@ -31,6 +31,7 @@ def register(request):
 #Decorators are a very powerful and useful tool in Python
 #since it allows programmers to modify the behaviour of function or class.
 def profile(request):
+    # user = User.objects.get(user = request.user)
     return render(request,'users/profile.html') 
 
  #http://127.0.0.1:8000/login/?next=/profile/  => next page redirected is the profile    
