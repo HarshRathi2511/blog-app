@@ -2,9 +2,10 @@ from typing import List
 from django.db.models import fields
 from django.shortcuts import render  # to return a render template
 from .models import Post
-from django.views.generic import ListView, DetailView, DeleteView, CreateView
-from  django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView, DeleteView, CreateView,UpdateView
+from  django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from blog import models
+
 
 # function based views
 
@@ -16,7 +17,16 @@ def home(request):  # function
     }
     return render(request, 'blog/home.html', context)
 
-# class based view
+
+def about(request):
+    return render(request, 'blog/about.html', {'title': 'About'})    
+
+# Class based views 
+# List view eg- List of videos in utube
+# Detail View 
+# Class view
+# Update view  
+# Delete view 
 
 
 class PostListView(ListView):
@@ -26,8 +36,6 @@ class PostListView(ListView):
     ordering = ['-date_posted']
 
 
-def about(request):
-    return render(request, 'blog/about.html', {'title': 'About'})
 
 
 class PostDetailView(DetailView):
@@ -37,7 +45,7 @@ class PostDetailView(DetailView):
     # context_object_name = 'posts'   #what it will be accesed as in the frontend
 
 # LoginRequiredMixin otherwise we will get redirected to the login required mixin 
-class PostCreateView(LoginRequiredMixin, CreateView):
+class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post
     fields=['title','content']
 
@@ -49,12 +57,31 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     #after creating the post we need to redirect to the detail page of the post view 
     # we need to create a method in the model that returns the url of each specefic instance  
 
+# for only the author to update the views 
+class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
+    model = Post
+    fields=['title','content']
 
-# Class based views 
-# List view eg- List of videos in utube
-# Detail View 
-# Class view
-# Update view  
-# Delete view 
+    #overriding the form valid method to specify the author of the blog 
+    def form_valid(self,form) :  #(method) form_valid: (self: Self@PostUpdateView, form) -> HttpResponse
+        form.instance.author =self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object() #Return the object the view is displaying.  
+        if self.request.user ==post.author:
+            return True
+        return False    
+
+class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
+    model = Post
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object() #Return the object the view is displaying.  
+        if self.request.user ==post.author:
+            return True
+        return False           
+
   
 
