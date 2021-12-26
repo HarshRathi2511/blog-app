@@ -19,6 +19,7 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail',kwargs={'pk':self.pk})  
+# pk -> primary key 
 # reversed returns the full path as the string 
 # The **kwargs argument is a dictionary argument, kwargs is the abbreviation of key word arguments. 
 # It means all the function keyword value pair arguments can be accessed use kwargs as a dictionary.

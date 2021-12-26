@@ -45,6 +45,8 @@ COMMIT;
 =>it wrote the sql code for the class 
 
 
+Django lets us interact with its database models, i.e. add, delete, modify and 
+query objects, using a database-abstraction API called ORM(Object Relational Mapper)
 
 python manage.py shell 
 allows us to work with the models interactively line by line 
@@ -106,3 +108,5 @@ email
 first_name
 last_name
 
+
+Modelling in django 

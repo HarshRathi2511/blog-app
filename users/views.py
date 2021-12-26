@@ -12,12 +12,10 @@ from users.forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
 
 def register(request):
     # to have the django created form
-    #
-
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
+        form = UserRegistrationForm(request.POST) #populate the data with register data from the user 
         if form.is_valid():
-          returnedUser = form.save()  # save the user
+          returnedUser = form.save()  # save the user and the changes updated in the database 
           print('$$$$$$$$')
           print(returnedUser)
           username = form.cleaned_data.get('username')
@@ -38,10 +36,13 @@ def register(request):
 def profile(request):
   # when a profile returns data from the post request then it is accesed in the same view using the request.Methof
 
-     if request.method == 'POST':
+     if request.method == 'POST':  #what to run after the information is posted and we passed in the new data 
       #  instances to know what profiles to update 
+      # request.FILES gets the file data from the user 
+      # request.POST is the post data the user updates 
           u_form = UserUpdateForm(request.POST,instance=request.user)
           p_form = ProfileUpdateForm(request.POST,request.FILES,instance=request.user.profile)
+          # populate the forms with the data collected from the user 
 
           if u_form.is_valid() and p_form.is_valid():
             u_form.save()

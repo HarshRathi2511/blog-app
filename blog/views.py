@@ -49,7 +49,7 @@ class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post
     fields=['title','content']
 
-    #overriding the form valid method to specify the author of the blog 
+    #overriding the form valid method to specify the author of the blog before creating the form 
     def form_valid(self,form) :
         form.instance.author =self.request.user
         return super().form_valid(form)
